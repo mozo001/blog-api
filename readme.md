@@ -70,10 +70,9 @@ Bloger/
 
 3. **Install Dependencies**
 
-   Note: Ensure the requirements file path matches your directory layout (`blog/requirments.txt`).
-
+  
    ```bash
-   pip install -r blog/requirments.txt
+   pip install -r requirments.txt
    ```
 
    *(Note: If you encounter package naming issues with `django_rest_framework` in the requirements file, install `djangorestframework` directly via `pip install django djangorestframework drf-spectacular`.)*
