@@ -29,13 +29,14 @@ Bloger/
 │   ├── tests.py            # Unit and integration tests
 │   ├── urls.py             # Application-level routing
 │   ├── views.py            # API views and business logic
-│   └── requirments.txt     # Project dependencies
+│  
 ├── src/                    # Project configuration directory
 │   ├── asgi.py             # ASGI entry point
 │   ├── settings.py         # Global Django & DRF settings
 │   ├── urls.py             # Root URL routing and documentation endpoints
 │   └── wsgi.py             # WSGI entry point
 └── manage.py               # Django command-line utility
+└── requirments.txt     # Project dependencies
 ```
 
 ## Prerequisites
