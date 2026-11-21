@@ -1,0 +1,27 @@
+{% extends 'index.html' %}
+
+{% block title %}{{ blog.title }}{% endblock %}
+
+{% block content %}
+    <article class="blog-detail">
+        <h1>{{ blog.title }}</h1>
+        <p class="blog-description">{{ blog.description }}</p>
+        <hr class="divider">
+        <div class="blog-content">{{ blog.content }}</div>
+    </article>
+
+    <div class="action-bar">
+        <a href="{% url 'blog_update' blog.pk %}" class="btn btn-edit">Update Blog</a>
+
+        <form method="POST" action="{% url 'blog_delete' blog.pk %}" class="inline-form">
+            {% csrf_token %}
+            <button type="submit" name="_method" value="DELETE" class="btn btn-delete">
+                Delete Blog
+            </button>
+        </form>
+    </div>
+
+    <div class="back-link">
+        <a href="{% url 'blog_list' %}">&larr; Back to all blogs</a>
+    </div>
+{% endblock %}

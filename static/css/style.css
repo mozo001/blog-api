@@ -1,0 +1,160 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: system-ui, -apple-system, sans-serif;
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    line-height: 1.6;
+    color: #222;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 2rem;
+}
+
+.brand {
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #0066cc;
+    font-weight: 600;
+    margin-left: 1rem;
+}
+
+.nav-links a:hover {
+    text-decoration: underline;
+}
+
+/* Blog List (index.html) */
+.blog-item {
+    padding: 1rem 0;
+    border-bottom: 1px solid #eee;
+}
+
+.blog-item h2 {
+    margin: 0 0 0.5rem 0;
+}
+
+.blog-item a {
+    text-decoration: none;
+    color: #111;
+}
+
+.blog-item a:hover {
+    color: #0066cc;
+}
+
+/* Forms (create_blog.html & update_blog.html) */
+.form-group {
+    margin-bottom: 1.2rem;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 0.6rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 1rem;
+}
+
+.button-group,
+.action-bar {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 1.5rem;
+}
+
+.inline-form {
+    display: inline;
+    margin: 0;
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    padding: 0.65rem 1.3rem;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-family: inherit;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.btn-post,
+.btn-edit {
+    background-color: #0066cc;
+}
+.btn-post:hover,
+.btn-edit:hover {
+    background-color: #0052a3;
+}
+
+.btn-put {
+    background-color: #d97706;
+}
+.btn-put:hover {
+    background-color: #b45309;
+}
+
+.btn-patch {
+    background-color: #059669;
+}
+.btn-patch:hover {
+    background-color: #047857;
+}
+
+.btn-delete {
+    background-color: #dc2626;
+}
+.btn-delete:hover {
+    background-color: #b91c1c;
+}
+
+/* Blog Detail (blog_detail.html) */
+.blog-description {
+    color: #555;
+    font-style: italic;
+}
+
+.divider {
+    border: 0;
+    border-top: 1px solid #eee;
+    margin: 1.5rem 0;
+}
+
+.blog-content {
+    white-space: pre-line;
+}
+
+.back-link {
+    margin-top: 2rem;
+}
+
+.back-link a {
+    text-decoration: none;
+    color: #0066cc;
+}

@@ -1,0 +1,39 @@
+{% extends 'index.html' %}
+
+{% block title %}Update: {{ blog.title }}{% endblock %}
+
+{% block content %}
+    <h1>Update Blog Post</h1>
+
+    <form method="POST" action="" class="blog-form">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" id="title" name="title" value="{{ blog.title }}">
+        </div>
+
+        <div class="form-group">
+            <label for="description">Short Description</label>
+            <input type="text" id="description" name="description" value="{{ blog.description }}">
+        </div>
+
+        <div class="form-group">
+            <label for="content">Content</label>
+            <textarea id="content" name="content" rows="8">{{ blog.content }}</textarea>
+        </div>
+
+        <div class="button-group">
+            <button type="submit" name="_method" value="PUT" class="btn btn-put">
+                Full Update (PUT)
+            </button>
+            <button type="submit" name="_method" value="PATCH" class="btn btn-patch">
+                Partial Update (PATCH)
+            </button>
+        </div>
+    </form>
+
+    <div class="back-link">
+        <a href="{% url 'blog_detail' blog.pk %}">&larr; Cancel and back to blog</a>
+    </div>
+{% endblock %}
