@@ -124,9 +124,9 @@ The application will be available at `http://127.0.0.1:8000/`.
 
 When `drf-spectacular` routes are configured in your URLs, documentation is exposed at:
 
-- **Swagger UI:** `/api/docs/` or `/blogs/docs/` (verify exact path in `src/urls.py` / `blog/urls.py`)
-- **ReDoc:** `/api/redoc/` or `/blogs/redoc/`
-- **OpenAPI Schema:** `/api/schema/` or `/blogs/schema/`
+- **Swagger UI:** `/blogs/docs/` (verify exact path in `src/urls.py` / `blog/urls.py`)
+- **ReDoc:** `/blogs/redoc/`
+- **OpenAPI Schema:** `/blogs/schema/`
 
 ## Endpoints
 
