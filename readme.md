@@ -1,141 +1,180 @@
-# Bloger API
+# Bloger
 
-A RESTful API built with Django and Django REST Framework for managing blog posts. The application supports full CRUD operations with UUID-based primary keys and includes automated OpenAPI 3.0 documentation via `drf-spectacular`.
+A Django and Django REST Framework (DRF) application providing both server-rendered HTML views and a RESTful JSON API for managing blog posts with UUIDv4 primary keys and OpenAPI 3.0 documentation via `drf-spectacular`.
 
 ## Features
 
-* **CRUD Operations**: Create, retrieve, update, and delete blog posts.
-* **UUID Identifiers**: Secure, non-sequential `UUIDv4` primary keys for blog resources.
-* **Interactive API Documentation**: Integrated Swagger UI, ReDoc, and downloadable OpenAPI schema.
-* **Modular Architecture**: Clean separation between core project configuration (`src`) and application logic (`blog`).
+- **Dual Interface:** Server-rendered HTML views (`index.html`, `blog_detail.html`, `create_blog.html`, `update_blog.html`) alongside JSON REST API endpoints.
+- **Full CRUD Support:** Create, retrieve, full/partial update (`PUT`/`PATCH`), and delete blog posts.
+- **UUIDv4 Identifiers:** Non-sequential `UUIDField` primary keys (`uuid4`) for blog records.
+- **Environment-Based Configuration:** Managed via `django-environ` and `.env` files for clean separation of secrets and environment settings.
+- **Interactive API Docs:** OpenAPI 3.0 schema with Swagger UI and ReDoc via `drf-spectacular`.
+- **Modular Layout:** Separation between Django project configuration (`src/`) and the feature app (`blog/`).
 
-## Technology Stack
+## Tech Stack
 
-* **Backend Framework**: Django
-* **API Toolkit**: Django REST Framework (DRF)
-* **API Documentation**: `drf-spectacular` (OpenAPI 3.0)
-* **Database**: SQLite (default for development; configurable for PostgreSQL/MySQL in production)
+- **Language & Framework:** Python 3, Django, Django REST Framework (DRF)
+- **Environment Management:** `django-environ`
+- **API Documentation:** `drf-spectacular` (OpenAPI 3.0)
+- **Database:** SQLite (default in development; PostgreSQL recommended for production)
 
 ## Project Structure
 
 ```text
-Bloger/
-├── blog/                   # Main application directory
-│   ├── migrations/         # Database migrations
-│   ├── admin.py            # Django admin configurations
-│   ├── apps.py             # App configuration
-│   ├── models.py           # Blog database model
-│   ├── serializers.py      # DRF serializers
-│   ├── tests.py            # Unit and integration tests
-│   ├── urls.py             # Application-level routing
-│   ├── views.py            # API views and business logic
-│  
-├── src/                    # Project configuration directory
-│   ├── asgi.py             # ASGI entry point
-│   ├── settings.py         # Global Django & DRF settings
-│   ├── urls.py             # Root URL routing and documentation endpoints
-│   └── wsgi.py             # WSGI entry point
-└── manage.py               # Django command-line utility
-└── requirments.txt     # Project dependencies
+.
+├── blog/
+│   ├── migrations/       # Database migrations
+│   ├── templates/        # Blog HTML templates (index, detail, create, update)
+│   ├── admin.py          # Django admin registration
+│   ├── apps.py           # App configuration
+│   ├── models.py         # Blog model definition
+│   ├── serializers.py    # DRF serializers
+│   ├── tests.py          # Unit and integration tests
+│   ├── urls.py           # API and HTML route definitions
+│   └── views.py          # DRF API views and HTML template views
+├── src/
+│   ├── templates/        # Project-level templates
+│   ├── asgi.py           # ASGI entry point
+│   ├── settings.py       # Django settings (configured with django-environ)
+│   ├── urls.py           # Root URL configuration
+│   └── wsgi.py           # WSGI entry point
+├── .env.example          # Example environment variables template
+├── manage.py             # Django CLI entry point
+├── requirements.txt      # Python dependencies
+└── README.md
 ```
 
-## Prerequisites
+## Getting Started (Local Development)
 
-* Python 3.10 or higher
-* `pip` (Python package installer)
-* `virtualenv` or `venv`
+### 1. Clone the Repository
 
-## Installation and Setup
+```bash
+git clone https://github.com/mozo001/blog-api.git
+cd blog-api
+```
 
-1. **Clone the Repository**
+### 2. Create and Activate a Virtual Environment
 
-   ```bash
-   git clone <repository-url>
-   cd Bloger
-   ```
+**Linux / macOS:**
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
 
-2. **Create and Activate a Virtual Environment**
+**Windows (PowerShell):**
+```powershell
+python -m venv venv
+venv\Scripts\Activate.ps1
+```
 
-   On Linux/macOS:
-   ```bash
-   python3 -m venv venv
-   source venv/bin/activate
-   ```
+### 3. Install Dependencies
 
-   On Windows:
-   ```bash
-   python -m venv venv
-   venv\Scripts\activate
-   ```
+```bash
+pip install -r requirements.txt
+```
 
-3. **Install Dependencies**
+*(Ensure `django-environ` is included in `requirements.txt`.)*
 
-  
-   ```bash
-   pip install -r requirments.txt
-   ```
+### 4. Configure Environment Variables
 
-   *(Note: If you encounter package naming issues with `django_rest_framework` in the requirements file, install `djangorestframework` directly via `pip install django djangorestframework drf-spectacular`.)*
+Copy the example environment file to `.env` and update the values for your local environment:
 
-4. **Apply Database Migrations**
+**Linux / macOS:**
+```bash
+cp .env.example .env
+```
 
-   ```bash
-   python manage.py makemigrations
-   python manage.py migrate
-   ```
+**Windows (PowerShell):**
+```powershell
+Copy-Item .env.example .env
+```
 
-5. **Create a Superuser (Optional)**
+Example `.env` configuration:
 
-   To access the Django Admin interface:
-   ```bash
-   python manage.py createsuperuser
-   ```
+```env
+DEBUG=True
+SECRET_KEY=replace-with-a-strong-unique-secret-key
+ALLOWED_HOSTS=localhost,127.0.0.1
+```
 
-6. **Run the Development Server**
+> **Security Note:** Never commit your real `.env` file or production `SECRET_KEY` to version control. Ensure `.env` is listed in `.gitignore`, and keep `.env.example` populated with placeholder values only.
 
-   ```bash
-   python manage.py runserver
-   ```
+### 5. Apply Migrations
 
-   The API will be available at `http://127.0.0.1:8000/`.
+```bash
+python manage.py makemigrations
+python manage.py migrate
+```
+
+### 6. Create an Admin Superuser (Optional)
+
+```bash
+python manage.py createsuperuser
+```
+
+### 7. Run the Development Server
+
+```bash
+python manage.py runserver
+```
+
+The application will be available at `http://127.0.0.1:8000/`.
 
 ## API Documentation
 
-This project uses `drf-spectacular` to generate OpenAPI 3.0 compliant documentation. Once the server is running, you can inspect and test the endpoints using the following URLs:
+When `drf-spectacular` routes are configured in your URLs, documentation is exposed at:
 
-* **Swagger UI (Interactive Docs)**: [http://127.0.0.1:8000/blogs/docs/](http://127.0.0.1:8000/blogs/docs/)
-* **ReDoc (Reference Docs)**: [http://127.0.0.1:8000/blogs/redoc/](http://127.0.0.1:8000/blogs/redoc/)
-* **OpenAPI Schema (YAML/JSON)**: [http://127.0.0.1:8000/blogs/schema/](http://127.0.0.1:8000/blogs/schema/)
+- **Swagger UI:** `/api/docs/` or `/blogs/docs/` (verify exact path in `src/urls.py` / `blog/urls.py`)
+- **ReDoc:** `/api/redoc/` or `/blogs/redoc/`
+- **OpenAPI Schema:** `/api/schema/` or `/blogs/schema/`
 
-## API Endpoints
+## Endpoints
 
-| HTTP Method | Endpoint | Description |
+> **Note:** Check `src/urls.py` to confirm whether `blog.urls` is mounted at root (`/`) or under a prefix such as `/blog/`.
+
+### REST API Endpoints (`blog/urls.py`)
+
+| Method | Path | Description |
 | :--- | :--- | :--- |
-| `GET` | `/` | Retrieve a list of all blog posts |
-| `POST` | `/blogs/create/` | Create a new blog post |
-| `GET` | `/blogs/<uuid:pk>/` | Retrieve details of a specific blog post |
-| `PUT` / `PATCH` | `/blogs/<uuid:pk>/update/` | Update an existing blog post |
-| `DELETE` | `/blogs/<uuid:pk>/delete/` | Delete a specific blog post |
-| `GET` | `/admin/` | Access the Django administration panel |
+| `GET` | `blogs/` | List all blog posts |
+| `POST` | `blogs/create/` | Create a new blog post |
+| `GET` | `blogs/<uuid:pk>/` | Retrieve a single blog post |
+| `PUT` | `blogs/<uuid:pk>/update/` | Full update of a blog post |
+| `PATCH` | `blogs/<uuid:pk>/update/` | Partial update of a blog post |
+| `DELETE` | `blogs/<uuid:pk>/delete/` | Delete a blog post |
+
+### HTML Views (`blog/urls.py`)
+
+| Method | Path | Description |
+| :--- | :--- | :--- |
+| `GET` | `/` | Blog list page (`index.html`) |
+| `GET` / `POST` | `create/` | Create blog form |
+| `GET` | `<uuid:pk>/` | Blog detail page (`blog_detail.html`) |
+| `GET` / `POST` | `<uuid:pk>/update/` | Update blog form (`update_blog.html`) |
+| `GET` / `POST` | `<uuid:pk>/delete/` | Delete confirmation / action |
 
 ## Data Model
 
-### Blog (`blog.models.Blog`)
+### `Blog` (`blog.models.Blog`)
 
-| Field | Type | Constraints / Details |
+Ordered by `-created_at` (newest first).
+
+| Field | Type | Constraints / Notes |
 | :--- | :--- | :--- |
-| `id` | `UUIDField` | Primary key, auto-generated (`uuid4`), non-editable |
-| `title` | `CharField` | Maximum length of 150 characters |
-| `description` | `TextField` | Main content body of the blog post |
-| `created_at` | `DateTimeField` | Automatically set when the record is created |
-| `updated_at` | `DateTimeField` | Automatically updated whenever the record is saved |
+| `id` | `UUIDField` | Primary key, auto-generated `uuid4`, `editable=False` |
+| `title` | `CharField` | `max_length=255` |
+| `description` | `CharField` | `max_length=500` |
+| `content` | `TextField` | Main post body |
+| `created_at` | `DateTimeField` | Auto-set on creation (`auto_now_add=True`) |
+| `updated_at` | `DateTimeField` | Auto-updated on save (`auto_now=True`) |
 
-## Production Considerations
+## Production Readiness & Best Practices
 
-Before deploying this application to a production environment, ensure the following steps are completed:
+To move from local development to a production-grade deployment:
 
-1. **Environment Variables**: Move `SECRET_KEY`, `DEBUG` (set to `False`), and database credentials out of `src/settings.py` into environment variables.
-2. **Allowed Hosts**: Configure `ALLOWED_HOSTS` in `src/settings.py` with your production domain names or IP addresses.
-3. **Database**: Switch from SQLite to a production-grade relational database such as PostgreSQL.
-4. **Application Server**: Serve the application using a production WSGI/ASGI server such as Gunicorn or Uvicorn behind a reverse proxy like Nginx.
-5. **Static Files**: Run `python manage.py collectstatic` and configure static file serving (e.g., via WhiteNoise or a CDN).
+1. **Secrets & Environment Config:** In `src/settings.py`, read `.env` (rather than `.env.example`) via `environ.Env.read_env(BASE_DIR / ".env")`, generate a new cryptographically secure `SECRET_KEY` for production, set `DEBUG=False`, and configure `ALLOWED_HOSTS` via environment variables.
+2. **Production Database:** Replace SQLite (`db.sqlite3`) with PostgreSQL (`DATABASE_URL` via `env.db()`) and manage schema changes strictly through versioned migrations (`python manage.py migrate`).
+3. **WSGI/ASGI & Reverse Proxy:** Serve the app with Gunicorn (or Uvicorn for async) behind Nginx, with HTTPS/TLS enabled.
+4. **Static Files:** Configure `STATIC_ROOT`, run `python manage.py collectstatic`, and serve static assets via WhiteNoise or a reverse proxy/CDN.
+5. **Security, Auth & Pagination:** Add authentication/permissions (`IsAuthenticated` or role/ownership checks as needed), configure CORS/CSRF settings explicitly, enable DRF pagination/throttling, and ensure user inputs are validated/sanitized before rendering HTML or saving records.
+6. **Testing & CI:** Expand unit and API tests in `blog/tests.py` and run `python manage.py test` (plus linting/type checks) in CI before merging or deploying.
